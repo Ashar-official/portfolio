@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md Ashar Hussain - Technical Support Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: #010409;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent: #39d353;
+            --accent-glow: rgba(57, 211, 83, 0.4);
+            --border-color: #30363d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Animated Scanlines Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.02) 50%);
+            background-size: 100% 4px;
+            animation: scanlines 20s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes scanlines {
+            from { background-position: 0 0; }
+            to { background-position: 0 -400px; }
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Typing effect cursor */
+        .type-cursor::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+            color: var(--accent);
+            margin-left: 0.25rem;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Glitch Effect on Hover */
+        .glitch-hover {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch-hover::before,
+        .glitch-hover::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background);
+            overflow: hidden;
+            clip-path: inset(50% 50% 50% 50%);
+            transition: clip-path 0.3s ease-in-out;
+        }
+        .glitch-hover::before {
+            transform: translate(-3px, -2px);
+            color: #f778ba; /* Magenta */
+            text-shadow: 2px 0 #f778ba;
+        }
+        .glitch-hover::after {
+            transform: translate(3px, 2px);
+            color: #3cc2fa; /* Cyan */
+            text-shadow: -2px 0 #3cc2fa;
+        }
+        .glitch-hover:hover::before {
+            clip-path: inset(20% 0 60% 0);
+        }
+        .glitch-hover:hover::after {
+            clip-path: inset(70% 0 10% 0);
+        }
+
+        /* Section fade-in animation */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card {
+            border: 1px solid var(--border-color);
+            background-color: rgba(13, 17, 23, 0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        
+        .timeline-dot {
+             background: var(--accent);
+             box-shadow: 0 0 15px var(--accent-glow);
+        }
+        .timeline-path {
+            border-color: var(--border-color);
+        }
+        
+        .custom-list li::before {
+            content: '>';
+            color: var(--accent);
+            margin-right: 0.75rem;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto p-4 md:p-8">
+        <!-- Header -->
+        <header class="flex justify-between items-center py-6">
+            <h1 class="text-xl font-bold tracking-tight text-white">
+                <span class="glitch-hover" data-text="md_ashar_hussain">md_ashar_hussain</span>
+            </h1>
+            <nav class="hidden md:flex space-x-8 text-sm">
+                <a href="#about" class="text-slate-300 hover:text-green-400 transition-colors">./about</a>
+                <a href="#experience" class="text-slate-300 hover:text-green-400 transition-colors">./experience</a>
+                <a href="#projects" class="text-slate-300 hover:text-green-400 transition-colors">./projects</a>
+                <a href="#contact" class="text-slate-300 hover:text-green-400 transition-colors">./contact</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="text-center py-24">
+            <h2 id="hero-title" class="text-3xl md:text-5xl font-bold leading-tight text-white h-12 md:h-16"></h2>
+            <p class="mt-6 text-lg text-slate-400 max-w-2xl mx-auto">
+                A self-starter with 2+ years of experience in technical support, performance troubleshooting, and web security. Open to new opportunities.
+            </p>
+            <div class="mt-8">
+                <a href="#projects" class="bg-green-600/80 text-white font-bold py-3 px-8 rounded-md hover:bg-green-600 transition-all border border-green-500 shadow-lg shadow-green-500/10">
+                    View My Work
+                </a>
+            </div>
+        </section>
+
+        <!-- About Me -->
+        <section id="about" class="py-20 fade-in-section">
+            <div class="grid md:grid-cols-3 gap-12 items-start">
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold text-white mb-4">root@ashar:~# whoami</h3>
+                </div>
+                <div class="md:col-span-2">
+                    <p class="text-slate-400 mb-4 text-lg">
+                        I'm a results-oriented Technical Support Engineer specializing in the WordPress ecosystem. With a knack for troubleshooting performance bottlenecks, resolving complex plugin conflicts, and hardening website security, I thrive on helping users and businesses optimize their digital presence.
+                    </p>
+                    <p class="text-slate-400 mb-4">
+                        My experience at BlogVault and NoFrillsCloud has given me a deep understanding of hosting environments, server configurations, and WordPress core. Having resolved over 1500 customer tickets with a 98% satisfaction rating, I'm adept at translating complex technical issues into clear, actionable solutions.
+                    </p>
+                     <p class="text-slate-400">
+                        I'm not just a problem-solver; I'm a proactive partner and builder. I enjoy creating tools like my WordPress plugins to empower the community. I am actively seeking opportunities to contribute my skills to a dynamic team, whether through collaboration, a partnership, or a full-time role.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What I Bring Section -->
+        <section id="what-i-bring" class="py-20 fade-in-section">
+            <div class="grid md:grid-cols-3 gap-12 items-start">
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold text-white mb-4">echo "What I bring to your team"</h3>
+                </div>
+                <div class="md:col-span-2">
+                    <ul class="custom-list space-y-3 text-slate-300">
+                        <li>Expert in plugin and theme conflict resolution</li>
+                        <li>Skilled in cPanel, DNS, FTP, NGINX, Apache, LiteSpeed, and CDN (Cloudflare) setup</li>
+                        <li>Deep experience in malware removal, hardening WordPress security, and firewall configuration</li>
+                        <li>Proficient in database optimization, server-side debugging, and caching (Redis, object cache)</li>
+                        <li>Strong foundation in PHP, JavaScript, jQuery, HTML, CSS, and debugging browser dev tools</li>
+                        <li>Knowledge of WooCommerce, payment gateway troubleshooting, and multisite setup</li>
+                        <li>Effective communicator with users and developers, creating bug reports and documentation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section id="experience" class="py-20 fade-in-section">
+            <h3 class="text-2xl font-bold text-white mb-12">/var/log/career.log</h3>
+            <div class="relative border-l-2 timeline-path ml-4 md:ml-0">
+                <!-- BlogVault -->
+                <div class="mb-12 pl-10 md:pl-12 relative">
+                    <div class="absolute -left-[0.85rem] top-1 w-6 h-6 rounded-full border-4 border-gray-900 timeline-dot"></div>
+                    <p class="text-sm text-green-400">Aug 2024 - Feb 2025</p>
+                    <h4 class="text-xl font-bold text-white mt-1">Technical Support Engineer</h4>
+                    <p class="text-md text-slate-300">BlogVault</p>
+                    <ul class="mt-4 list-disc list-inside text-slate-400 space-y-2 text-sm">
+                        <li>Supported 300+ WordPress users monthly across multiple products.</li>
+                        <li>Achieved a 98% customer satisfaction rate by resolving complex issues.</li>
+                        <li>Enhanced website performance.</li>
+                        <li>Assisted with malware detection/removal and security hardening.</li>
+                    </ul>
+                </div>
+                <!-- NoFrillsCloud -->
+                <div class="mb-12 pl-10 md:pl-12 relative">
+                    <div class="absolute -left-[0.85rem] top-1 w-6 h-6 rounded-full border-4 border-gray-900 timeline-dot"></div>
+                    <p class="text-sm text-green-400">Apr 2023 - May 2024</p>
+                    <h4 class="text-xl font-bold text-white mt-1">Technical Support Engineer</h4>
+                    <p class="text-md text-slate-300">NoFrillsCloud</p>
+                    <ul class="mt-4 list-disc list-inside text-slate-400 space-y-2 text-sm">
+                        <li>Resolved 500+ customer tickets with a 98% satisfaction rate.</li>
+                        <li>Improved email security and efficiency by 50%.</li>
+                        <li>Configured and optimized Apache, LiteSpeed, and NGINX web servers.</li>
+                        <li>Managed cPanel/WHM hosting environments on CentOS, AlmaLinux, and Ubuntu.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="py-20 fade-in-section">
+            <h3 class="text-2xl font-bold text-white mb-12">ls ~/projects/</h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- SecurelyWP -->
+                <div class="project-card rounded-lg overflow-hidden">
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-white">SecurelyWP</h4>
+                        <p class="text-slate-400 mt-2 text-sm">An all-in-one security plugin with malware scanning, a robust firewall, and detailed system diagnostics.</p>
+                        <a href="https://wordpress.org/plugins/securelywp" target="_blank" class="inline-block mt-4 text-green-400 hover:text-green-300 font-semibold text-sm">View on WordPress.org &rarr;</a>
+                    </div>
+                </div>
+                <!-- ZeroState -->
+                <div class="project-card rounded-lg overflow-hidden">
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-white">ZeroState</h4>
+                        <p class="text-slate-400 mt-2 text-sm">A utility plugin for developers to reset a WordPress site to its default state for clean testing environments.</p>
+                        <a href="https://wordpress.org/plugins/zerostate" target="_blank" class="inline-block mt-4 text-green-400 hover:text-green-300 font-semibold text-sm">View on WordPress.org &rarr;</a>
+                    </div>
+                </div>
+                <!-- ShareLite -->
+                <div class="project-card rounded-lg overflow-hidden">
+                     <div class="p-6">
+                        <h4 class="text-xl font-bold text-white">ShareLite</h4>
+                        <p class="text-slate-400 mt-2 text-sm">A lightweight social sharing plugin to add beautiful, fast-loading share buttons to your WordPress site.</p>
+                        <a href="https://wordpress.org/plugins/sharelite" target="_blank" class="inline-block mt-4 text-green-400 hover:text-green-300 font-semibold text-sm">View on WordPress.org &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section id="skills" class="py-20 fade-in-section">
+            <h3 class="text-2xl font-bold text-white mb-12">cat /etc/skills.conf</h3>
+            <div class="max-w-5xl mx-auto">
+                <div class="flex flex-wrap justify-center gap-3 text-sm">
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">WordPress</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">PHP</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">JavaScript</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">jQuery</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">HTML</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">CSS</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Python</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Bash</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Linux</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">CentOS</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">AlmaLinux</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Ubuntu</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">cPanel/WHM</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Plesk</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Malware Removal</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Firewall Config</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">DDoS Prevention</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Database Tuning</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Caching</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">CDN Setup</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">DNS</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">FTP</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Git/GitHub</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Jira</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Grafana</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">API/Webhooks</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">HTTP Methods/Codes</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">CORS/CSP/HSTS</span>
+                    <span class="bg-gray-800/50 py-2 px-4 rounded-md border border-gray-700">Browser Dev Tools</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action / Contact -->
+        <section id="contact" class="py-20 text-center fade-in-section">
+            <h3 class="text-3xl font-bold text-white">get-in-touch --now</h3>
+            <p class="mt-4 text-slate-400 max-w-xl mx-auto">I'm currently open to new opportunities. If you're looking for a dedicated technical expert with a passion for web performance and security, I'd love to connect.</p>
+            <div class="mt-8">
+                <a href="https://linkedin.com/in/md-ashar" target="_blank" class="inline-block bg-green-600/80 text-white font-bold py-3 px-8 rounded-md hover:bg-green-600 transition-all border border-green-500 shadow-lg shadow-green-500/10">
+                    Connect with me on LinkedIn
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center py-6 border-t border-gray-800/50">
+            <p class="text-slate-500 text-sm">exit 0</p>
+        </footer>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Typing Effect ---
+            const heroTitleEl = document.getElementById('hero-title');
+            const lines = [
+                "Technical Support Engineer",
+                "Plugins & Themes Developer",
+                "Web Hosting Expert",
+                "Penetration Tester"
+            ];
+            let currentLine = 0;
+            let currentChar = 0;
+            let isDeleting = false;
+            let delay = 2000;
+
+            function type() {
+                const fullText = lines[currentLine];
+                let typeSpeed = isDeleting ? 50 : 120;
+
+                if (isDeleting) {
+                    currentChar--;
+                } else {
+                    currentChar++;
+                }
+                
+                heroTitleEl.innerHTML = `<span class="type-cursor">${fullText.substring(0, currentChar)}</span>`;
+
+                if (!isDeleting && currentChar === fullText.length) {
+                    // Pause at end of line
+                    typeSpeed = delay;
+                    isDeleting = true;
+                } else if (isDeleting && currentChar === 0) {
+                    isDeleting = false;
+                    currentLine = (currentLine + 1) % lines.length; // Move to the next line, loop back to start
+                    typeSpeed = 500; // Pause before typing next line
+                }
+                
+                setTimeout(type, typeSpeed);
+            }
+            
+            // --- Scroll Fade-in Effect ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Start typing effect
+            setTimeout(type, 500);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
