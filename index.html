@@ -38,6 +38,17 @@
             pointer-events: none;
         }
 
+        /* Canvas for lightning effect */
+        #lightning-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
         /* Animated Scanlines Background */
         body::before {
             content: '';
@@ -49,7 +60,7 @@
             background-image: linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.02) 50%);
             background-size: 100% 4px;
             animation: scanlines 20s linear infinite;
-            z-index: -1;
+            z-index: 0;
             pointer-events: none;
         }
 
@@ -149,6 +160,7 @@
 </head>
 <body class="antialiased">
     <canvas id="particles-canvas"></canvas>
+    <canvas id="lightning-canvas"></canvas>
     <div class="container mx-auto p-4 md:p-8">
         <!-- Header -->
         <header class="flex justify-between items-center py-6">
@@ -337,22 +349,22 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // --- Space Particles Animation ---
-            const canvas = document.getElementById('particles-canvas');
-            const ctx = canvas.getContext('2d');
+            const particlesCanvas = document.getElementById('particles-canvas');
+            const particlesCtx = particlesCanvas.getContext('2d');
 
-            // Set canvas size to match window
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+            // Set particles canvas size
+            function resizeParticlesCanvas() {
+                particlesCanvas.width = window.innerWidth;
+                particlesCanvas.height = window.innerHeight;
             }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
+            resizeParticlesCanvas();
+            window.addEventListener('resize', resizeParticlesCanvas);
 
             // Particle class
             class Particle {
                 constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
+                    this.x = Math.random() * particlesCanvas.width;
+                    this.y = Math.random() * particlesCanvas.height;
                     this.size = Math.random() * 2 + 0.5;
                     this.speedX = Math.random() * 0.5 - 0.25;
                     this.speedY = Math.random() * 0.5 - 0.25;
@@ -362,19 +374,17 @@
                 update() {
                     this.x += this.speedX;
                     this.y += this.speedY;
-
-                    // Wrap around canvas edges
-                    if (this.x > canvas.width) this.x = 0;
-                    if (this.x < 0) this.x = canvas.width;
-                    if (this.y > canvas.height) this.y = 0;
-                    if (this.y < 0) this.y = canvas.height;
+                    if (this.x > particlesCanvas.width) this.x = 0;
+                    if (this.x < 0) this.x = particlesCanvas.width;
+                    if (this.y > particlesCanvas.height) this.y = 0;
+                    if (this.y < 0) this.y = particlesCanvas.height;
                 }
 
                 draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                    ctx.fill();
+                    particlesCtx.beginPath();
+                    particlesCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    particlesCtx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                    particlesCtx.fill();
                 }
             }
 
@@ -385,9 +395,9 @@
                 particlesArray.push(new Particle());
             }
 
-            // Animation loop
+            // Animate particles
             function animateParticles() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particlesCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
                 particlesArray.forEach(particle => {
                     particle.update();
                     particle.draw();
@@ -395,6 +405,65 @@
                 requestAnimationFrame(animateParticles);
             }
             animateParticles();
+
+            // --- Lightning Strike Animation ---
+            const lightningCanvas = document.getElementById('lightning-canvas');
+            const lightningCtx = lightningCanvas.getContext('2d');
+
+            // Set lightning canvas size
+            function resizeLightningCanvas() {
+                lightningCanvas.width = window.innerWidth;
+                lightningCanvas.height = window.innerHeight;
+            }
+            resizeLightningCanvas();
+            window.addEventListener('resize', resizeLightningCanvas);
+
+            // Lightning strike function
+            function drawLightning() {
+                lightningCtx.clearRect(0, 0, lightningCanvas.width, lightningCanvas.height);
+                const startX = Math.random() * lightningCanvas.width * 0.4 + lightningCanvas.width * 0.3;
+                const startY = 0;
+                const endY = lightningCanvas.height;
+                let currentX = startX;
+                let currentY = 0;
+
+                lightningCtx.beginPath();
+                lightningCtx.moveTo(startX, startY);
+                lightningCtx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+                lightningCtx.lineWidth = 2;
+                lightningCtx.shadowBlur = 20;
+                lightningCtx.shadowColor = 'rgba(255, 255, 255, 0.7)';
+
+                while (currentY < endY) {
+                    currentY += Math.random() * 50 + 20;
+                    currentX += Math.random() * 40 - 20;
+                    if (currentY > endY) currentY = endY;
+                    lightningCtx.lineTo(currentX, currentY);
+                }
+
+                lightningCtx.stroke();
+
+                // Fade out effect
+                setTimeout(() => {
+                    lightningCtx.clearRect(0, 0, lightningCanvas.width, lightningCanvas.height);
+                }, 100);
+            }
+
+            // Schedule three lightning strikes
+            let strikeCount = 0;
+            const maxStrikes = 3;
+            const strikeInterval = 5000; // 5 seconds
+
+            function scheduleLightning() {
+                if (strikeCount < maxStrikes) {
+                    drawLightning();
+                    strikeCount++;
+                    setTimeout(scheduleLightning, strikeInterval);
+                }
+            }
+
+            // Start lightning strikes after a short delay
+            setTimeout(scheduleLightning, 1000);
 
             // --- Typing Effect ---
             const heroTitleEl = document.getElementById('hero-title');
