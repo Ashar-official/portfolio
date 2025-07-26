@@ -23,6 +23,19 @@
             background-color: var(--background);
             color: var(--text-primary);
             overflow-x: hidden;
+            margin: 0;
+            position: relative;
+        }
+
+        /* Canvas for space particles */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
         }
 
         /* Animated Scanlines Background */
@@ -119,8 +132,8 @@
         }
         
         .timeline-dot {
-             background: var(--accent);
-             box-shadow: 0 0 15px var(--accent-glow);
+            background: var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
         }
         .timeline-path {
             border-color: var(--border-color);
@@ -132,10 +145,10 @@
             margin-right: 0.75rem;
             font-weight: bold;
         }
-
     </style>
 </head>
 <body class="antialiased">
+    <canvas id="particles-canvas"></canvas>
     <div class="container mx-auto p-4 md:p-8">
         <!-- Header -->
         <header class="flex justify-between items-center py-6">
@@ -176,7 +189,7 @@
                     <p class="text-slate-400 mb-4">
                         My experience at BlogVault and NoFrillsCloud has given me a deep understanding of hosting environments, server configurations, and WordPress core. Having resolved over 1500 customer tickets with a 98% satisfaction rating, I'm adept at translating complex technical issues into clear, actionable solutions.
                     </p>
-                     <p class="text-slate-400">
+                    <p class="text-slate-400">
                         I'm not just a problem-solver; I'm a proactive partner and builder. I enjoy creating tools like my WordPress plugins to empower the community. I am actively seeking opportunities to contribute my skills to a dynamic team, whether through collaboration, a partnership, or a full-time role.
                     </p>
                 </div>
@@ -258,7 +271,7 @@
                 </div>
                 <!-- ShareLite -->
                 <div class="project-card rounded-lg overflow-hidden">
-                     <div class="p-6">
+                    <div class="p-6">
                         <h4 class="text-xl font-bold text-white">ShareLite</h4>
                         <p class="text-slate-400 mt-2 text-sm">A lightweight social sharing plugin to add beautiful, fast-loading share buttons to your WordPress site.</p>
                         <a href="https://wordpress.org/plugins/sharelite" target="_blank" class="inline-block mt-4 text-green-400 hover:text-green-300 font-semibold text-sm">View on WordPress.org &rarr;</a>
@@ -323,6 +336,66 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- Space Particles Animation ---
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Set canvas size to match window
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Particle class
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                    this.opacity = Math.random() * 0.5 + 0.3;
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    // Wrap around canvas edges
+                    if (this.x > canvas.width) this.x = 0;
+                    if (this.x < 0) this.x = canvas.width;
+                    if (this.y > canvas.height) this.y = 0;
+                    if (this.y < 0) this.y = canvas.height;
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                    ctx.fill();
+                }
+            }
+
+            // Create particles
+            const particlesArray = [];
+            const numberOfParticles = 100;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+
+            // Animation loop
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particlesArray.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
             // --- Typing Effect ---
             const heroTitleEl = document.getElementById('hero-title');
             const lines = [
@@ -349,13 +422,12 @@
                 heroTitleEl.innerHTML = `<span class="type-cursor">${fullText.substring(0, currentChar)}</span>`;
 
                 if (!isDeleting && currentChar === fullText.length) {
-                    // Pause at end of line
                     typeSpeed = delay;
                     isDeleting = true;
                 } else if (isDeleting && currentChar === 0) {
                     isDeleting = false;
-                    currentLine = (currentLine + 1) % lines.length; // Move to the next line, loop back to start
-                    typeSpeed = 500; // Pause before typing next line
+                    currentLine = (currentLine + 1) % lines.length;
+                    typeSpeed = 500;
                 }
                 
                 setTimeout(type, typeSpeed);
